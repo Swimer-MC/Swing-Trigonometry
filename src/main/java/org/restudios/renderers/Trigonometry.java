@@ -1,4 +1,4 @@
-package org.restudios;
+package org.restudios.renderers;
 
 import org.ReStudios.utitlitium.ArrayUtils;
 import org.ReStudios.utitlitium.MathUtils;
@@ -6,6 +6,7 @@ import org.ReStudios.utitlitium.NFile;
 import org.ReStudios.utitlitium.Timer;
 import org.ReStudios.utitlitium.vectors.Vector2;
 import org.jetbrains.annotations.Nullable;
+import org.restudios.IRenderer;
 
 import java.awt.*;
 import java.awt.geom.Arc2D;
@@ -14,29 +15,23 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.TreeMap;
 
-public class Renderer {
+public class Trigonometry implements IRenderer {
 
-    public static int fps = 0;
-    private static long lastTime = System.currentTimeMillis();
-    private static int frameCount = 0;
     public static Font font;
-    public static Font f3;
 
     static {
         try {
             font = Font.createFonts(new NFile("Anta-Regular.ttf"))[0].deriveFont(Font.PLAIN, 20);
-            f3 = Font.createFonts(new NFile("Ticketing.ttf"))[0].deriveFont(Font.PLAIN, 22);
         } catch (FontFormatException | IOException e) {
             throw new RuntimeException(e);
         }
     }
-    Vector2 before = new Vector2(0,0);
+
     TreeMap<Long, Double> angles = new TreeMap<>();
+    @Override
     public void render(Graphics2D g, @Nullable Vector2 mouse, Vector2 size){
         Timer tim = new Timer();
         tim.run();
-        if(mouse == null) mouse = before;
-        before = mouse;
         Vector2 s = mouse.clone().sub(3);
         int w = 100, h = 100;
         int cX = size.x()/2, cY = size.y()/2;
@@ -119,15 +114,7 @@ public class Renderer {
         g.drawString(angleText, pos.x(), pos.y());
 
 
-        g.setColor(Color.decode("#00aa00"));
-        g.setFont(f3);
-        String fpsString = fps+" FPS";
-        String emsString = tim.total()+"ms render time";
-        int offset = (int) f3.getStringBounds(fpsString, g.getFontRenderContext()).getHeight();
-        g.drawString(fpsString, 0, offset);
-        offset += (int) f3.getStringBounds(emsString, g.getFontRenderContext()).getHeight();
-        g.drawString(emsString, 0, offset);
-        updateFps();
+
     }
 
     @SuppressWarnings("SameParameterValue")
@@ -163,14 +150,5 @@ public class Renderer {
         }
     }
 
-    public static void updateFps() {
-        long currentTime = System.currentTimeMillis();
-        frameCount++;
 
-        if (currentTime - lastTime >= 50) {
-            fps = (int) (frameCount / ((currentTime - lastTime) / 1000.0));
-            frameCount = 0;
-            lastTime = currentTime;
-        }
-    }
 }
