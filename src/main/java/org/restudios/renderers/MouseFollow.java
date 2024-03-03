@@ -1,14 +1,11 @@
 package org.restudios.renderers;
 
-import com.sun.source.tree.Tree;
-import org.ReStudios.utitlitium.ArrayUtils;
 import org.ReStudios.utitlitium.vectors.Vector2;
 import org.jetbrains.annotations.Nullable;
 import org.restudios.IRenderer;
 
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.TreeMap;
 
 public class MouseFollow implements IRenderer {

@@ -92,7 +92,7 @@ public class Trigonometry implements IRenderer {
             double t = getAtLast(x);
             int xpos = every*x;
             if(t != -999){
-                addLimit(last, t, 1);
+                ArrayUtils.addLimited(last, 1, (float)t);
                 int fx = sv.x()+xpos;
                 int fy =(int)MathUtils.map(MathUtils.getAverageValue(last), 360, 0, sv.y(), sv.y()+ch);
                 if(bef == null) {
@@ -117,13 +117,6 @@ public class Trigonometry implements IRenderer {
 
     }
 
-    @SuppressWarnings("SameParameterValue")
-    private void addLimit(ArrayList<Float> list, double value, int limit) {
-        if(limit <= list.size()){
-            list.removeFirst();
-        }
-        list.add((float)value);
-    }
 
     private double getAtLast(int sub){
         Long[] d = angles.keySet().toArray(new Long[0]);

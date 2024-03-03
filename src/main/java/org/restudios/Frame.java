@@ -1,5 +1,6 @@
 package org.restudios;
 
+import org.ReStudios.utitlitium.FPSCalculator;
 import org.ReStudios.utitlitium.NFile;
 import org.ReStudios.utitlitium.ThreadBuilder;
 import org.ReStudios.utitlitium.Timer;
@@ -24,11 +25,12 @@ public class Frame extends JFrame {
     public Frame(IRenderer renderer){
         super("So[Co]sinus");
         this. renderer = renderer;
-        FPSMgr fpsMgr = new FPSMgr();
+        FPSCalculator fpsMgr = new FPSCalculator();
         JPanel canvas = new JPanel(){
             Vector2 before = new Vector2(0,0);
             @Override
             public void paint(Graphics g) {
+                fpsMgr.updateFps();
                 Timer tim = new Timer();
                 tim.run();
                 Point m = getMousePosition();
@@ -40,7 +42,7 @@ public class Frame extends JFrame {
                 before = mouse;
 
                 g.setFont(f3);
-                String fpsString = fpsMgr.fps+" FPS";
+                String fpsString = fpsMgr.averageFPS()+" FPS";
                 String emsString = tim.total()+"ms render time";
 
                 Rectangle2D fpsOffset = f3.getStringBounds(fpsString, ((Graphics2D)g).getFontRenderContext());
@@ -52,7 +54,7 @@ public class Frame extends JFrame {
                 g.setColor(Color.decode("#ffffff"));
                 g.drawString(fpsString, 5, (int) fpsOffset.getHeight());
                 g.drawString(emsString, 5, (int) fpsOffset.getHeight() + (int)emsOffset.getHeight());
-                fpsMgr.updateFps();
+
             }
         };
 
