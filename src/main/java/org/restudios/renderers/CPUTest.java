@@ -13,6 +13,7 @@ public class CPUTest implements IRenderer {
         //int offset = 0;
         int w = size.x(), h = size.y();
         Random r= new Random();
+
         for (int x = 0; x < w; x++) {
             for (int y = 0; y < h; y++) {
                 int rr = r.nextInt(255);

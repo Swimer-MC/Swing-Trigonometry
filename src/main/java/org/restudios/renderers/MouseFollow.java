@@ -14,10 +14,10 @@ public class MouseFollow implements IRenderer {
     @Override
     public void render(Graphics2D g, @Nullable Vector2 mouse, Vector2 size) {
         int grid = 5;
-        int everyX = size.x() / grid;
+        int everyX = size.x / grid;
         int everyY = everyX;
-        int x = mouse.x() / everyX;
-        int y = mouse.y() / everyY;
+        int x = mouse.x / everyX;
+        int y = mouse.y / everyY;
         Vector2 pos = new Vector2(x*everyX+everyX/2, y*everyY+everyY/2);
         g.setColor(Color.RED);
         Vector2 v = points.values().stream().findFirst().orElse(null);
@@ -27,7 +27,7 @@ public class MouseFollow implements IRenderer {
         Vector2 before = v == null ? pos : v;
         g.setColor(Color.BLACK);
         for (Vector2 value : points.values()) {
-            g.drawLine(before.x(), before.y(), value.x(), value.y());
+            g.drawLine(before.x, before.y, value.x, value.y);
             before = value;
         }
         clear();

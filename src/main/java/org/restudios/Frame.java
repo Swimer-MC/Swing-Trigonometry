@@ -8,6 +8,8 @@ import org.ReStudios.utitlitium.vectors.Vector2;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.geom.Rectangle2D;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
@@ -23,7 +25,7 @@ public class Frame extends JFrame {
         }
     }
     public Frame(IRenderer renderer){
-        super("So[Co]sinus");
+        super("So[Co]sinus - "+renderer.getClass().getSimpleName()+".java");
         this. renderer = renderer;
         FPSCalculator fpsMgr = new FPSCalculator();
         JPanel canvas = new JPanel(){
@@ -54,9 +56,14 @@ public class Frame extends JFrame {
                 g.setColor(Color.decode("#ffffff"));
                 g.drawString(fpsString, 5, (int) fpsOffset.getHeight());
                 g.drawString(emsString, 5, (int) fpsOffset.getHeight() + (int)emsOffset.getHeight());
-
             }
         };
+        addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                renderer.keyRelease(e);
+            }
+        });
 
         setContentPane(canvas);
         setSize(600, 600);
